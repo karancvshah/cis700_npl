@@ -45,7 +45,7 @@ def dataloader(num_batches,
         inp[:seq_len, :, :seq_width] = seq
         inp[seq_len, :, seq_width] = 1.0 # delimiter in our control channel
         
-        outp = torch.add(inp, inp)
+        outp = seq.clone() + seq.clone()
 
         yield batch_num+1, inp.float(), outp.float()
 
@@ -61,7 +61,7 @@ class AddTaskParams(object):
     sequence_max_len = attrib(default=20, converter=int)
     memory_n = attrib(default=128, converter=int)
     memory_m = attrib(default=20, converter=int)
-    num_batches = attrib(default=2, converter=int)
+    num_batches = attrib(default=1000, converter=int)
     batch_size = attrib(default=1, converter=int)
     rmsprop_lr = attrib(default=1e-4, converter=float)
     rmsprop_momentum = attrib(default=0.9, converter=float)
